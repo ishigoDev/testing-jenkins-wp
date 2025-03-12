@@ -17,13 +17,17 @@ This project sets up a local WordPress environment using Docker Compose. It incl
     ```
 
 2. Create a .env file with the following variables:
+    ```sh
     MYSQL_ROOT_PASSWORD=your_root_password
     MYSQL_DATABASE=your_database_name
     MYSQL_USER=your_database_user
     MYSQL_PASSWORD=your_database_password
-
+    ```
+    
 4. Start the Docker containers:
+    ```sh
     docker-compose up -d
+    ```
 
 5. Access the services:
     WordPress:  http://localhost:8080
@@ -31,8 +35,9 @@ This project sets up a local WordPress environment using Docker Compose. It incl
 
 ## Stopping the Services
     To stop the services, run:
-    
+    ```bash
     docker-compose down
+    ```
 
 ## Persistent Data
 Database data is stored in the db Docker volume.
