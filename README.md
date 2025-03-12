@@ -22,10 +22,10 @@ This project sets up a local WordPress environment using Docker Compose. It incl
     MYSQL_USER=your_database_user
     MYSQL_PASSWORD=your_database_password
 
-3. Start the Docker containers:
+4. Start the Docker containers:
     docker-compose up -d
 
-4. Access the services:
+5. Access the services:
     WordPress:  http://localhost:8080
     PHPMyAdmin: http://localhost:8081
 
