@@ -11,8 +11,10 @@ This project sets up a local WordPress environment using Docker Compose. It incl
 
 ## Getting Started
 1. Clone this repository:
-    git clone https://github.com/your-repo/wordpress-docker.git
+    ```sh
+    git clone 
     cd wordpress-docker
+    ```
 
 2. Create a .env file with the following variables:
     MYSQL_ROOT_PASSWORD=your_root_password
@@ -29,6 +31,7 @@ This project sets up a local WordPress environment using Docker Compose. It incl
 
 ## Stopping the Services
     To stop the services, run:
+    
     docker-compose down
 
 ## Persistent Data
@@ -40,4 +43,4 @@ Modify the WordPress files by editing the contents of the ./ directory.
 ## Additional Notes
 Ensure that port 8080 (for WordPress) and 8081 (for PHPMyAdmin) are not in use by other applications.
 
-## You can configure memory allocation and other parameters in the docker-compose.yml file.
+You can configure memory allocation and other parameters in the docker-compose.yml file.
