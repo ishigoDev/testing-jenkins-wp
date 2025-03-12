@@ -23,7 +23,7 @@ This project sets up a local WordPress environment using Docker Compose. It incl
     MYSQL_USER=your_database_user
     MYSQL_PASSWORD=your_database_password
     ```
-    
+
 4. Start the Docker containers:
     ```sh
     docker-compose up -d
@@ -35,9 +35,7 @@ This project sets up a local WordPress environment using Docker Compose. It incl
 
 ## Stopping the Services
     To stop the services, run:
-    ```bash
-    docker-compose down
-    ```
+    docker-compose down    
 
 ## Persistent Data
 Database data is stored in the db Docker volume.
