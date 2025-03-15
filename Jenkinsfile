@@ -12,6 +12,7 @@
                 steps {
                     script {
                         def gitBranch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
+                        echo gitBranch
                         if (gitBranch != BRANCH_NAME) {
                             echo "Not on main branch. Skipping pipeline..."
                             currentBuild.result = 'ABORTED'
