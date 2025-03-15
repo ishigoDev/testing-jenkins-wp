@@ -3,14 +3,14 @@ pipeline {
 
     environment {
         LOCAL_WP_CONTENT_DIR = 'wp-content' // The directory in your Git repo
-        DOCKER_WP_CONTENT_DIR = './wp-content' // The target path of the wp-content in your WordPress Docker container
-        CONTAINER_NAME = 'wordpress' // Name of your WordPress container
+        DOCKER_WP_CONTENT_DIR = '/var/www/html/wp-content' // The target path of the wp-content in your WordPress Docker container
+        CONTAINER_NAME = 'setup-wp-using-docker_wordpress_1' // Name of your WordPress container
     }
 
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-repo.git'
+                git branch: 'main', url: 'https://github.com/ishigoDev/testing-jenkins-wp.git'
             }
         }
 
