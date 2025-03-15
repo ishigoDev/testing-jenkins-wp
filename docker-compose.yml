@@ -32,6 +32,7 @@ services:
             - wordpress-network
 
     wordpress:
+        container_name: testing
         depends_on:
             - database
         image: wordpress:latest
@@ -49,6 +50,8 @@ services:
         networks:
             - wordpress-network
     jenkins:
+        user: root  # Ensures Jenkins has necessary permissions
+        privileged: true # Allows access to Docker
         image: jenkins/jenkins:lts
         container_name: jenkins
         restart: unless-stopped
