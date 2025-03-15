@@ -36,7 +36,7 @@
                 steps {
                     script {
                         // Get container name dynamically
-                        CONTAINER_NAME = sh(script: "docker ps --filter ancestor=wordpress --format '{{.Names}}'", returnStdout: true).trim()
+                        def CONTAINER_NAME = sh(script: "docker ps --filter ancestor=wordpress --format '{{.Names}}'", returnStdout: true).trim()
                         echo "Using container: ${CONTAINER_NAME}"
                     }
                 }
