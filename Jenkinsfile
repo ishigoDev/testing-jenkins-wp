@@ -11,14 +11,15 @@
             stage('Check Branch') {
                 steps {
                     script {
+                        sh 'git fetch --all'
+                        sh 'git checkout main' // Ensure we're on the main branch
                         def gitBranch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
-                        echo gitBranch
+                        echo "Current branch: ${gitBranch}"
                         if (gitBranch != BRANCH_NAME) {
                             echo "Not on main branch. Skipping pipeline..."
                             currentBuild.result = 'ABORTED'
                             error("Stopping build since it's not on the main branch")
                         }
-                        echo "Running pipeline on branch: ${gitBranch}"
                     }
                 }
             }
