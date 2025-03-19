@@ -56,7 +56,7 @@
                         if (changedFiles) {
                             echo "Changed files:\n${changedFiles}"
                             changedFiles.split('\n').each { file ->
-                                sh "docker cp ${file} ${CONTAINER_NAME}:${DOCKER_WP_CONTENT_DIR}/${file.replaceFirst('^${LOCAL_WP_CONTENT_DIR}/', '')}"
+                                sh "docker cp ${file} ${CONTAINER_NAME}:${DOCKER_WP_CONTENT_DIR}/${file.replaceFirst('^' + Pattern.quote(LOCAL_WP_CONTENT_DIR) + '/', '')}"
                             }
                         } else {
                             echo "No changes detected in ${LOCAL_WP_CONTENT_DIR}."
