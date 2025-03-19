@@ -42,13 +42,13 @@
                 }
             }
 
-            stage('Copy wp-content to Container') {
-                steps {
-                    sh """
-                    docker cp ${LOCAL_WP_CONTENT_DIR}/ ${CONTAINER_NAME}:${DOCKER_WP_CONTENT_DIR}
-                    """
-                }
-            }
+            // stage('Copy wp-content to Container') {
+            //     steps {
+            //         sh """
+            //         docker cp ${LOCAL_WP_CONTENT_DIR}/ ${CONTAINER_NAME}:${DOCKER_WP_CONTENT_DIR}
+            //         """
+            //     }
+            // }
 
             stage('Verify Changes') {
                 steps {
