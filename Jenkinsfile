@@ -20,14 +20,6 @@
                             currentBuild.result = 'ABORTED'
                             error("Stopping build since it's not on the main branch")
                         }
-                        step([
-                            $class: 'GitHubCommitStatusSetter',
-                            context: 'ci/jenkins',
-                            statusBackref: '',
-                            statusUrl: env.BUILD_URL,
-                            description: 'Jenkins build is running...',
-                            state: 'PENDING'
-                        ])
                     }
                 }
             }
@@ -65,19 +57,22 @@
             }
         }
         post {              
-              success { 
-                script {
-                    // Notify GitHub that the build was successful
-                    step([
-                        $class: 'GitHubCommitStatusSetter',
-                        context: 'ci/jenkins',
-                        statusBackref: '',
-                        statusUrl: env.BUILD_URL,
-                        description: 'Build was successful 🎉',
-                        state: 'SUCCESS'
-                    ])
-                }
-                echo 'Build was successful! 🎉' 
-            }
+              success {
+        script {
+            step([
+                $class: 'GitHubCommitStatusSetter',
+                reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/your-repo.git'],
+                commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: "${env.GIT_COMMIT}"],
+                contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: "Jenkins Build"],
+                statusResultSource: [$class: 'ConditionalStatusResultSource',
+                    results: [[
+                        status: 'SUCCESS',
+                        message: 'Build was successful 🎉'
+                    ]]
+                ]
+            ])
+        }
+        echo "✅ Build was successful! Build URL: ${env.BUILD_URL}"
+    }   
         }
     }
