@@ -69,9 +69,7 @@
     description: 'Build completed',
     state: 'SUCCESS',
     statusBackref: env.BUILD_URL,
-    errorHandlers: [
-        [$class: 'ChangingBuildStatusErrorHandler', result: 'UNSTABLE']
-    ]
+
 ])
             
         }
