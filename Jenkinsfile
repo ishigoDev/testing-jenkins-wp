@@ -59,6 +59,8 @@
         post {              
               success {
         script {
+            echo env.BUILD_URL
+            echo env.GIT_COMMIT
             step([
                 $class: 'GitHubCommitStatusSetter',
                 reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ishigoDev/testing-jenkins-wp.git'],
