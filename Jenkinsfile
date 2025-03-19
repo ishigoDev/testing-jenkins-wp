@@ -20,6 +20,14 @@
                             currentBuild.result = 'ABORTED'
                             error("Stopping build since it's not on the main branch")
                         }
+                        step([
+                            $class: 'GitHubCommitStatusSetter',
+                            context: 'ci/jenkins',
+                            statusBackref: '',
+                            statusUrl: env.BUILD_URL,
+                            description: 'Jenkins build is running...',
+                            state: 'PENDING'
+                        ])
                     }
                 }
             }
@@ -57,7 +65,18 @@
             }
         }
         post {              
-            success { 
+              success { 
+                script {
+                    // Notify GitHub that the build was successful
+                    step([
+                        $class: 'GitHubCommitStatusSetter',
+                        context: 'ci/jenkins',
+                        statusBackref: '',
+                        statusUrl: env.BUILD_URL,
+                        description: 'Build was successful 🎉',
+                        state: 'SUCCESS'
+                    ])
+                }
                 echo 'Build was successful! 🎉' 
             }
         }
