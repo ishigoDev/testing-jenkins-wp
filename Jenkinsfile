@@ -62,17 +62,18 @@
             echo env.BUILD_URL
             echo env.GIT_COMMIT
             step([
-                $class: 'GitHubCommitStatusSetter',
-                reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ishigoDev/testing-jenkins-wp.git'],
-                commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: "${env.GIT_COMMIT}"],
-                contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: "Jenkins Build"],
-                statusResultSource: [$class: 'ConditionalStatusResultSource',
-                    results: [[
-                        status: 'SUCCESS',
-                        message: 'Build was successful 🎉'
-                    ]]
-                ]
-            ])
+    $class: 'GitHubCommitStatusSetter',
+    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ishigoDev/testing-jenkins-wp.git'],
+    commitShaSource: [$class: 'ManuallyEnteredShaSource',  sha: "${env.GIT_COMMIT}"],
+    context: 'Jenkins Build',
+    description: 'Build completed',
+    state: 'SUCCESS',
+    statusBackref: env.BUILD_URL,
+    errorHandlers: [
+        [$class: 'ChangingBuildStatusErrorHandler', result: 'UNSTABLE']
+    ]
+])
+            
         }
         echo "✅ Build was successful! Build URL: ${env.BUILD_URL}"
     }   
