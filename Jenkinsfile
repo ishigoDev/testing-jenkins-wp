@@ -61,7 +61,7 @@
         script {
             step([
                 $class: 'GitHubCommitStatusSetter',
-                reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/your-repo.git'],
+                reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ishigoDev/testing-jenkins-wp.git'],
                 commitShaSource: [$class: 'ManuallyEnteredShaSource', sha: "${env.GIT_COMMIT}"],
                 contextSource: [$class: 'ManuallyEnteredCommitContextSource', context: "Jenkins Build"],
                 statusResultSource: [$class: 'ConditionalStatusResultSource',
