@@ -14,7 +14,7 @@
                         sh 'git fetch --all'
                         sh 'git checkout main' // Ensure we're on the main branch
                         def gitBranch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
-                        echo "Current branch: ${gitBranch}"
+                        echo "Current branch : ${gitBranch}"
                         if (gitBranch != BRANCH_NAME) {
                             echo "Not on main branch. Skipping pipeline..."
                             currentBuild.result = 'ABORTED'
@@ -31,7 +31,6 @@
                     }
                 }
             }
-
             stage('Get Container Name') {
                 steps {
                     script {
@@ -41,7 +40,6 @@
                     }
                 }
             }
-
             // stage('Copy wp-content to Container') {
             //     steps {
             //         sh """
@@ -64,7 +62,6 @@
                     }
                 }
             }
-
             stage('Verify Changes') {
                 steps {
                     echo 'Deployment complete. Verify wp-content changes locally.'
@@ -72,22 +69,31 @@
             }
         }
         post {              
-              success {
-        script {
-            echo env.BUILD_URL
-            echo env.GIT_COMMIT
-            step([
-    $class: 'GitHubCommitStatusSetter',
-    reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ishigoDev/testing-jenkins-wp.git'],
-    commitShaSource: [$class: 'ManuallyEnteredShaSource',  sha: "${env.GIT_COMMIT}"],
-    context: 'Jenkins Build',
-    description: 'Build completed',
-    state: 'SUCCESS',
-    statusBackref: env.BUILD_URL,
-])
-            
-        }
-        echo "✅ Build was successful! Build URL: ${env.BUILD_URL}"
-    }   
+            success {
+                script {
+                    echo env.BUILD_URL
+                    echo env.GIT_COMMIT
+                    step([
+                        $class: 'GitHubCommitStatusSetter',
+                        reposSource: [$class: 'ManuallyEnteredRepositorySource', url: 'https://github.com/ishigoDev/testing-jenkins-wp.git'],
+                        commitShaSource: [$class: 'ManuallyEnteredShaSource',  sha: "${env.GIT_COMMIT}"],
+                        context: 'Jenkins Build',
+                        description: 'Build completed',
+                        state: 'SUCCESS',
+                        statusBackref: env.BUILD_URL,
+                    ])
+                    
+                }
+                echo "✅ Build was successful! Build URL: ${env.BUILD_URL}"
+            }
+            failure {
+                slackSend(
+                    channel: '#cicd-updates',
+                    color: 'danger',
+                    message: """
+                    ❌ *Build Failed!*
+                    """
+                )
+            }   
         }
     }
